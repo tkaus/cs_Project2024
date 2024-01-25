@@ -1,7 +1,13 @@
 import argparse
 import requests 
+import json
+import sys
 
-response = requests.get("https://api.weather.gov")
+n = len(sys.argv)
 
-print(response.status_code)
-
+if (n == 1):
+    print("Too few arguments")
+else: 
+    if argv[1] == "setup":
+        print('Program is working')
+        
