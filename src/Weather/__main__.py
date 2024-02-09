@@ -13,7 +13,8 @@ if (n == 1):
     print("Too few arguments")
 else: 
     if sys.argv[1] == "setup":
-        print('Program is working')
+        FileManipulator.setup()
+        print("Success") 
     elif sys.argv[1] == "update":
         FileManipulator.update() 
     elif sys.argv[1] == "current":
