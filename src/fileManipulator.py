@@ -1,39 +1,50 @@
-#import argparse
 import requests 
 import json
+import os
+import sys
 
+directory = "/Users/tylerkaus/Desktop/WeatherData"
+parentDirectory = "~/Desktop/"
+filePath = os.path.expanduser(directory)
 
 class FileManipulator():
     def update():
-        file = open("setupAPI.txt", "r")
+        temp = directory + "/setupAPI.txt"
+        file = open(temp, "r")
+        #file = open("setupAPI.txt", "r")
         setupAPI = file.read() 
-        # response = requests.get("https://api.weather.gov/gridpoints/FSD/149,22/forecast")
         response = requests.get(setupAPI)
         data = response.json()
-        with open("data.json","w+") as f:
+        temp = directory + "/data.json"
+        with open(temp,"w+") as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
         return
 
     def current():
-        with open('data.json', 'r') as file:
+        temp = filePath + "/data.json"
+        with open(temp, 'r') as file:
             weatherData = json.load(file)
         output = weatherData['properties']['periods'][0]['temperature']
         return output
 
     def setup():
-        latitude = input("Enter the x coordinates of a city: ")
-        longitude = input("Enter the y coordinates of a city: ")
+        if not os.path.exists(filePath):
+            os.mkdir(filePath)
+         
+        latitude = input("Enter the latitude coordinates of a city: ")
+        longitude = input("Enter the longitude coordinates of a city: ")
         apicall = "https://api.weather.gov/points/"+latitude+ ","+longitude
         apicall = apicall.replace(" ", "")
-        print(apicall)
         response = requests.get(apicall)
         data = response.json()
-        with open("apicall.json","w+") as f:
+        temp = filePath + "/apicall.json"
+        #with open("apicall.json","w+") as f:
+        with open(temp, "w+") as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
-        
-        with open("apicall.json","r") as file:
+
+        with open(temp,"r") as file:
             read = json.load(file)
-        setupAPI = open("setupAPI.txt", "w")
+        temp = filePath + "/setupAPI.txt"
+        setupAPI = open(temp, "w")
         setupAPI.write(read['properties']['forecast'])
         print(read['properties']['forecast'])
-        

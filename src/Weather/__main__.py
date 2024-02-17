@@ -1,6 +1,3 @@
-#import argparse
-#import requests 
-#import json
 import sys
 
 #importinClasses
@@ -11,9 +8,11 @@ n = len(sys.argv)
 
 if (n == 1):
     print("Too few arguments")
+    print("Type 'help' to see a list of commands.")
 else: 
     if sys.argv[1] == "setup":
         FileManipulator.setup()
+        FileManipulator.update()
         print("Success") 
     elif sys.argv[1] == "update":
         FileManipulator.update() 
