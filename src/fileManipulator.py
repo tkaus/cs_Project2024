@@ -20,13 +20,6 @@ class FileManipulator():
             json.dump(data, f, ensure_ascii=False, indent=4)
         return
 
-    def current():
-        temp = filePath + "/data.json"
-        with open(temp, 'r') as file:
-            weatherData = json.load(file)
-        output = weatherData['properties']['periods'][0]['temperature']
-        return output
-
     def setup():
         if not os.path.exists(filePath):
             os.mkdir(filePath)
