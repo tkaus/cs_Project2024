@@ -25,9 +25,20 @@ else:
         else:
             output = display.current() 
             print(output, "F")
+    elif sys.argv[1] == "save":
+        if(n == 3):
+            print('This will save data you select')
+        else:
+            print('''
+                This program will save the following metrics:
+                    current temparature
+                    current wind speed and direction 
+                    current detailed forecast''')
+            files.save()
     elif sys.argv[1] == 'help':
         print("""
               Commands: 
                 setup
                 update
-                current""")
+                current
+                save""")

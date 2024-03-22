@@ -7,13 +7,15 @@ parentDirectory = "~/Desktop/"
 filePath = os.path.expanduser(directory)
 
 class WeatherDisplay():
+    #displaysTemparature 
     def current():
         temp = filePath + "/data.json"
         with open(temp, 'r') as file:
             weatherData = json.load(file)
         output = weatherData['properties']['periods'][0]['temperature']
         return output
-    
+
+    #displaysCustomData 
     def current2(input):
         temp = filePath + "/data.json"
         with open(temp, 'r') as file:
@@ -33,4 +35,12 @@ class WeatherDisplay():
             detailedForecast::detailed version of current forecast""") 
         return output
     
+    #displaysDataFromSavedFile
+    def read(info):
+        if(info == "none"):
+            print("Please provide information in the following format: DataYYYYMMDD (without slashes or dashes)")
+        else:
+            print("The function is working!")
+    
 
+WeatherDisplay.read("anythingElse")

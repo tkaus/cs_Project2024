@@ -2,16 +2,17 @@ import requests
 import json
 import os
 import sys
+from datetime import datetime
 
 directory = "/Users/tylerkaus/Desktop/WeatherData"
 parentDirectory = "~/Desktop/"
 filePath = os.path.expanduser(directory)
 
 class FileManipulator():
+#updateFunction
     def update():
         temp = directory + "/setupAPI.txt"
         file = open(temp, "r")
-        #file = open("setupAPI.txt", "r")
         setupAPI = file.read() 
         response = requests.get(setupAPI)
         data = response.json()
@@ -20,6 +21,7 @@ class FileManipulator():
             json.dump(data, f, ensure_ascii=False, indent=4)
         return
 
+#setupFunction
     def setup():
         if not os.path.exists(filePath):
             os.mkdir(filePath)
@@ -31,7 +33,6 @@ class FileManipulator():
         response = requests.get(apicall)
         data = response.json()
         temp = filePath + "/apicall.json"
-        #with open("apicall.json","w+") as f:
         with open(temp, "w+") as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
 
@@ -41,3 +42,39 @@ class FileManipulator():
         setupAPI = open(temp, "w")
         setupAPI.write(read['properties']['forecast'])
         print(read['properties']['forecast'])
+
+#saveFuntion
+    def save():
+        temp = filePath + "/savedData.json"
+        readFile = filePath + "/data.json"
+        #readingDataFile
+        with open(readFile, "r") as file:
+            readData = json.load(file)
+        #collectingDateAndMakingIDNumber
+        date_time = datetime.now()
+        format1 = '%Y-%m-%d'
+        format2 = '%Y%m%d'
+        todaysDate = date_time.strftime(format1)
+        ID = date_time.strftime(format2)
+        identifier = "Data"+ID
+        #collectingDataFromJsonFile 
+        currentTemp = readData['properties']['periods'][0]['temperature']
+        windSpeed = readData['properties']['periods'][0]['windSpeed']
+        windDirection = readData['properties']['periods'][0]['windDirection']
+        forecast = readData['properties']['periods'][0]['detailedForecast']
+        #savingDataToNewFile
+        writtenData = {
+            identifier : {
+            "Date" : todaysDate,
+            "temparature" : currentTemp,
+            "windSpeed" : windSpeed,
+            "windDirection" : windDirection,
+            "detailedForecast" : forecast,
+            }
+        }
+        with open(temp, "w+") as newFile:
+            json.dump(writtenData, newFile)
+        print("Success")
+
+# FileManipulator.save()
+
