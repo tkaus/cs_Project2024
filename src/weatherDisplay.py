@@ -40,7 +40,18 @@ class WeatherDisplay():
         if(info == "none"):
             print("Please provide information in the following format: DataYYYYMMDD (without slashes or dashes)")
         else:
-            print("The function is working!")
-    
+            temp = filePath + "/savedData.json"
+            with open(temp,"r") as file:
+                readData = json.load(file)
+            # print("the function is working")
+            # print(readData)
+            # j
+            print("Date: " + str(readData[info]["Date"]))
+            # print("Coordinates: " + str(readData[info]["coordinates"]))
+            print("temparature: "+ str(readData[info]["temparature"]))
+            print("Wind Speed: "+str(readData[info]["windSpeed"]))
+            print("Wind Direction: "+str(readData[info]["windDirection"]))
+            print("Detailed Forecast: "+str(readData[info]["detailedForecast"]))
 
-WeatherDisplay.read("anythingElse")
+
+WeatherDisplay.read("Data20240322")

@@ -35,6 +35,12 @@ else:
                     current wind speed and direction 
                     current detailed forecast''')
             files.save()
+    elif sys.argv[1] == "read":
+        if (n == 3):
+            print('Fetching Data')
+            
+        else:
+            print("the if statement is still working")
     elif sys.argv[1] == 'help':
         print("""
               Commands: 

@@ -57,7 +57,8 @@ class FileManipulator():
         todaysDate = date_time.strftime(format1)
         ID = date_time.strftime(format2)
         identifier = "Data"+ID
-        #collectingDataFromJsonFile 
+        #collectingDataFromJsonFile
+        # coordinates = readData["geometry"][coordinates][0]
         currentTemp = readData['properties']['periods'][0]['temperature']
         windSpeed = readData['properties']['periods'][0]['windSpeed']
         windDirection = readData['properties']['periods'][0]['windDirection']
@@ -66,14 +67,20 @@ class FileManipulator():
         writtenData = {
             identifier : {
             "Date" : todaysDate,
+            # "Coordinates" : coordinates,
             "temparature" : currentTemp,
             "windSpeed" : windSpeed,
             "windDirection" : windDirection,
             "detailedForecast" : forecast,
             }
         }
+        with open(temp, "r") as oldData:
+            existingData = json.load(oldData)
+        
         with open(temp, "w+") as newFile:
+            # existingData = json.load(newFile)
             json.dump(writtenData, newFile)
+            json.dump(existingData, newFile)
         print("Success")
 
 # FileManipulator.save()
