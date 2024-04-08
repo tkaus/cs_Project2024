@@ -19,6 +19,7 @@ class FileManipulator():
         temp = directory + "/data.json"
         with open(temp,"w+") as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
+        print("Success")
         return
 
 #setupFunction
@@ -42,45 +43,97 @@ class FileManipulator():
         setupAPI = open(temp, "w")
         setupAPI.write(read['properties']['forecast'])
         print(read['properties']['forecast'])
+        print("Success")
 
 #saveFuntion
     def save():
-        temp = filePath + "/savedData.json"
-        readFile = filePath + "/data.json"
-        #readingDataFile
-        with open(readFile, "r") as file:
-            readData = json.load(file)
-        #collectingDateAndMakingIDNumber
-        date_time = datetime.now()
-        format1 = '%Y-%m-%d'
-        format2 = '%Y%m%d'
-        todaysDate = date_time.strftime(format1)
-        ID = date_time.strftime(format2)
-        identifier = "Data"+ID
-        #collectingDataFromJsonFile
-        # coordinates = readData["geometry"][coordinates][0]
-        currentTemp = readData['properties']['periods'][0]['temperature']
-        windSpeed = readData['properties']['periods'][0]['windSpeed']
-        windDirection = readData['properties']['periods'][0]['windDirection']
-        forecast = readData['properties']['periods'][0]['detailedForecast']
-        #savingDataToNewFile
-        writtenData = {
-            identifier : {
-            "Date" : todaysDate,
-            # "Coordinates" : coordinates,
-            "temparature" : currentTemp,
-            "windSpeed" : windSpeed,
-            "windDirection" : windDirection,
-            "detailedForecast" : forecast,
+        temp = directory + "/savedData.json"
+        if not os.path.exists(temp):
+            print("Creating File")
+            readFile = filePath + "/data.json"
+            #readingDataFile
+            with open(readFile, "r") as file:
+                readData = json.load(file)
+            #collectingDateAndMakingIDNumber
+            date_time = datetime.now()
+            format1 = '%Y-%m-%d'
+            format2 = '%Y%m%d'
+            todaysDate = date_time.strftime(format1)
+            ID = date_time.strftime(format2)
+            identifier = "Data"+ID
+            #collectingDataFromJsonFile
+            # coordinates = readData["geometry"][coordinates][0]
+            currentTemp = readData['properties']['periods'][0]['temperature']
+            windSpeed = readData['properties']['periods'][0]['windSpeed']
+            windDirection = readData['properties']['periods'][0]['windDirection']
+            forecast = readData['properties']['periods'][0]['detailedForecast']
+            #savingDataToNewFile
+            writtenData = {
+                "dateID":{
+                    identifier : {
+                        "Date" : todaysDate,
+                        # "Coordinates" : coordinates,
+                        "temparature" : currentTemp,
+                        "windSpeed" : windSpeed,
+                        "windDirection" : windDirection,
+                        "detailedForecast" : forecast,
+                    }
+                }
             }
-        }
-        with open(temp, "r") as oldData:
-            existingData = json.load(oldData)
-        
-        with open(temp, "w+") as newFile:
-            # existingData = json.load(newFile)
-            json.dump(writtenData, newFile)
-            json.dump(existingData, newFile)
+
+            # print(type(existingData))   
+            with open(temp, "w+") as newFile:
+                # existingData = json.load(newFile)
+                json.dump(writtenData, newFile)
+
+        else:
+            print("Found File")
+            readFile = filePath + "/data.json"
+            #readingDataFile
+            with open(readFile, "r") as file:
+                readData = json.load(file)
+            #collectingDateAndMakingIDNumber
+            date_time = datetime.now()
+            format1 = '%Y-%m-%d'
+            format2 = '%Y%m%d'
+            todaysDate = date_time.strftime(format1)
+            ID = date_time.strftime(format2)
+            identifier = "Data"+ID
+            #collectingDataFromJsonFile
+            # coordinates = readData["geometry"][coordinates][0]
+            currentTemp = readData['properties']['periods'][0]['temperature']
+            windSpeed = readData['properties']['periods'][0]['windSpeed']
+            windDirection = readData['properties']['periods'][0]['windDirection']
+            forecast = readData['properties']['periods'][0]['detailedForecast']
+            #savingDataToNewFile
+            writtenData = {
+                    identifier : {
+                        "Date" : todaysDate,
+                        # "Coordinates" : coordinates,
+                        "temparature" : currentTemp,
+                        "windSpeed" : windSpeed,
+                        "windDirection" : windDirection,
+                        "detailedForecast" : forecast,
+                    }
+                }
+
+            with open(temp, "r") as f:
+                existingData=json.load(f)
+            existingData = existingData["dateID"]
+            print(existingData)
+            with open(temp, "a") as file:
+                # existingData = json.load(file)
+                existingData.update(writtenData)
+                file.seek(0)
+                json.dump(existingData, file, indent=4)
+                # json.dump(writtenData, file)
+
+
+            # print(type(existingData))   
+            # with open(temp, "w+") as newFile:
+            #     # existingData = json.load(newFile)
+            #     json.dump(writtenData, newFile)
+            #     json.dump(existingData, newFile)
         print("Success")
 
 # FileManipulator.save()

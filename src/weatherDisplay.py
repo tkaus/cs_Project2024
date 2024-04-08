@@ -31,7 +31,7 @@ class WeatherDisplay():
             temperatureTrend::current trend of temparature
             windSpeed::current wind speed 
             windDirection::current wind direction 
-            shortForecast::shortended version of the current forecast 
+            shortForecast::shortened version of the current forecast 
             detailedForecast::detailed version of current forecast""") 
         return output
     
@@ -54,4 +54,4 @@ class WeatherDisplay():
             print("Detailed Forecast: "+str(readData[info]["detailedForecast"]))
 
 
-WeatherDisplay.read("Data20240322")
+# WeatherDisplay.read("Data20240322")
