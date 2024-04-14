@@ -59,6 +59,13 @@ class FileManipulator():
         with open(temp, "w+") as file:
             json.dump(readData, file, ensure_ascii=False, indent=4)
         print("Success")
+#deleteFunction
+    def delete(info):
+        temp = filePath + "/" + info + ".json"
+        if os.path.exists(temp):
+            os.remove(temp)
+            print("Success") 
+        else:
+            print("The file does not exist.")
 
-# FileManipulator.save()
 

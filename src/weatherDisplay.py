@@ -37,21 +37,19 @@ class WeatherDisplay():
     
     #displaysDataFromSavedFile
     def read(info):
-        if(info == "none"):
-            print("Please provide information in the following format: DataYYYYMMDD (without slashes or dashes)")
-        else:
-            temp = filePath + "/savedData.json"
+        
+        temp = filePath + "/" + info + ".json"
+        if os.path.exists(temp):
             with open(temp,"r") as file:
                 readData = json.load(file)
-            # print("the function is working")
-            # print(readData)
-            # j
-            print("Date: " + str(readData[info]["Date"]))
-            # print("Coordinates: " + str(readData[info]["coordinates"]))
-            print("temparature: "+ str(readData[info]["temparature"]))
-            print("Wind Speed: "+str(readData[info]["windSpeed"]))
-            print("Wind Direction: "+str(readData[info]["windDirection"]))
-            print("Detailed Forecast: "+str(readData[info]["detailedForecast"]))
-
-
-# WeatherDisplay.read("Data20240322")
+            #printingTheData 
+            print("==========================")
+            print("Date: " + str(readData["properties"]["updated"]))
+            print("Temperature: "+ str(readData["properties"]["periods"][0]["temperature"]))
+            print("Wind Speed: "+str(readData["properties"]["periods"][0]["windSpeed"]))
+            print("Wind Direction: "+str(readData["properties"]["periods"][0]["windDirection"]))
+            print("Detailed Forecast: "+str(readData["properties"]["periods"][0]["detailedForecast"]))
+            print("==========================")
+            print("Success")
+        else:
+            print("File does not exist or incorrect command.")

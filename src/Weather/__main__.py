@@ -31,9 +31,23 @@ else:
     elif sys.argv[1] == "read":
         if (n == 3):
             print('Fetching Data')
-            
+            info = sys.argv[2]
+            display.read(info)
         else:
-            print("the if statement is still working")
+            print("To use the read function, structure your command like the following.")
+            print(">>> read YYYYMMDD")
+    elif sys.argv[1] == "delete":
+        if (n == 3):
+            info = sys.argv[2]
+            userin = input("y/n Are you sure you want to delete " + info + " >>> ")
+            if(userin == "y"):
+                print('Deleting Data')
+                files.delete(info)
+            else:
+                print("okay")
+        else:
+            print("To use the delete function, structure your command like the following.")
+            print(">>> read YYYYMMDD")
     elif sys.argv[1] == 'help':
         print("""
               Commands: 
